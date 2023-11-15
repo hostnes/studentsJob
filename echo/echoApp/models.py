@@ -13,6 +13,18 @@ CURRENCY = (
     ("USD", "USD"),
     ("RUB", "RUB"),
 )
+EMPLOYMENT = (
+    ("Full employment", "Full employment"),
+    ("Part-time employment", "Part-time employment"),
+    ("One-time job", "One-time job"),
+    ("Internship", "Internship"),
+)
+EDUCATION = (
+    ("Not required", "Not required"),
+    ("Higher", "Higher"),
+    ("Vocational", "Vocational"),
+    ("Specialized secondary", "Specialized secondary"),
+)
 
 
 """#################################### general constants ####################################"""
@@ -58,7 +70,14 @@ class Education(models.Model):
         return self.title
 
 
-"""###c################################# echo ####################################"""
+class Experience(models.Model):
+    title = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title
+
+
+"""#################################### echo ####################################"""
 
 
 class User(models.Model):
@@ -87,6 +106,7 @@ class Company(models.Model):
     logo = models.ImageField(upload_to="company", blank=True)
     description = models.TextField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    # region = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -96,9 +116,12 @@ class Vacancy(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     celery = models.PositiveIntegerField()
-    currency = models.CharField(max_length=255, choices=CURRENCY,  null=True, default=None)
     date_of_create = models.DateField(auto_now_add=True)
 
+    currency = models.CharField(max_length=255, choices=CURRENCY,  null=True, default=None)
+    education = models.CharField(max_length=255, choices=EDUCATION,  null=True, default=None)
+    employment = models.CharField(max_length=255, choices=EMPLOYMENT,  null=True, default=None)
+    experience = models.ForeignKey(Experience, on_delete=models.SET_NULL, blank=True, null=True)
     city = models.ForeignKey(Region, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 

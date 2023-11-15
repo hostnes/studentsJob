@@ -2,7 +2,7 @@ import hashlib
 import json
 
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 
@@ -116,7 +116,10 @@ def profile(request):
             return render(request, 'echoApp/profile.html', context=context)
         elif request.method == "POST":
             user_obj = User.objects.get(email=request.POST['email'])
-            user_obj.img = request.FILES['img']
+            try:
+                user_obj.img = request.FILES['img']
+            except:
+                user_obj.img = user_obj.img
             user_obj.first_name = request.POST['first_name']
             user_obj.last_name = request.POST['last_name']
             user_obj.birthday = request.POST['birthday']
@@ -131,7 +134,18 @@ def vacancies(request):
     context = {}
     if is_user_auth(request) != None:
         context['auth_user'] = User.objects.get(id=is_user_auth(request))
+    vacancies = Vacancy.objects.all()
+    context['vacancies'] = vacancies
+    context['experience'] = Experience.objects.all()
     return render(request, 'echoApp/vacancies.html', context=context)
+
+
+def filter_vacancies(request):
+    qwe = request.GET
+    print(qwe)
+    return HttpResponse({'status': 'ok'})
+
+def vacancy(request, )
 
 # def vacancies(request):
 #     context = {'123': 123}

@@ -17,7 +17,7 @@ countries.forEach((element) => {
   );
 });
 
-var loadImage = function (event) {
+function loadImage (event) {
   var output = document.getElementById("preview");
 
   output.src = URL.createObjectURL(event.target.files[0]);
@@ -106,3 +106,4 @@ function logOut() {
 }
 
 fetchData();
+

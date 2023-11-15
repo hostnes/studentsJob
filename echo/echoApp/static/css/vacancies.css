@@ -20,8 +20,8 @@
   flex-direction: column;
   align-items: center;
   padding-top: 100px;
-  min-height: 300vh;
   margin-left: 50px;
+  margin-bottom: 100px;
 }
 
 .filters > div {
@@ -36,7 +36,7 @@
 }
 
 .filters ul li,
-.exp_lvl label,
+.select-experience label,
 .city li,
 .podrabotka li {
   margin-bottom: 10px;
@@ -45,7 +45,7 @@
 }
 
 .filters ul li input[type="checkbox"],
-.exp_lvl input[type="range"],
+.select-experience input[type="range"],
 .city li input[type="checkbox"],
 .podrabotka li input[type="checkbox"] {
   margin-right: 10px;
@@ -60,7 +60,7 @@
   margin-top: 10px;
 }
 
-.exp_lvl p,
+.select-experience p,
 .income p {
   margin-top: 10px;
   color: #333;
@@ -91,7 +91,7 @@ input[type="range"] {
   border: none;
   background-color: rgba(134, 125, 125, 0.418);
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 0 5px 0;
   margin-top: 10px;
 }
 
@@ -106,7 +106,6 @@ input[type="range"] {
 
 .vacancy {
   background-color: #e3e0e0;
-  height: 200px;
   margin: 4px 0px 50px 100px;
   width: 900px;
   font-family: "Poppins", sans-serif;
@@ -238,8 +237,26 @@ select {
   background-color: rgba(134, 125, 125, 0.418);
   border-radius: 5px;
   padding: 5px;
-  width: 160px;
+  width: 140px;
 }
 select:focus {
   outline: none;
+}
+
+#searchBtn {
+  background-color: #e3e0e0;
+  font-size: 17px;
+  margin-top: 30px;
+  width: 100px;
+  height: 40px;
+  border: solid 1px black;
+  border-radius: 5px;
+}
+
+#searchBtn:hover {
+  background-color: #cccccc;
+}
+
+#searchBtn:active {
+  background-color: #aaaaaa;
 }

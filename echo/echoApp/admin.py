@@ -43,6 +43,9 @@ class VacancyAdmin(admin.ModelAdmin):
     list_display = ("title", "celery")
 
 
+@admin.register(Experience)
+class ExperienceAdmin(admin.ModelAdmin):
+    list_display = ("title",)
 # @admin.register(District)
 # class DistrictAdmin(admin.ModelAdmin):
 #     list_display = ("title", "region")
