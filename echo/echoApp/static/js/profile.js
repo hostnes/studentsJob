@@ -1,4 +1,10 @@
 document.querySelectorAll(".logout-btn")[0].addEventListener("click", logOut);
+document
+  .querySelectorAll(".my-resumes")[0]
+  .addEventListener("click", mySummaries);
+document
+  .querySelectorAll(".my-business-btn")[0]
+  .addEventListener("click", myBusiness);
 
 const dateInput = document.getElementById("date-input");
 arr = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "Backspace"];
@@ -17,14 +23,14 @@ countries.forEach((element) => {
   );
 });
 
-function loadImage (event) {
+function loadImage(event) {
   var output = document.getElementById("preview");
 
   output.src = URL.createObjectURL(event.target.files[0]);
   output.onload = function () {
     URL.revokeObjectURL(output.src);
   };
-};
+}
 
 async function fetchData() {
   const response = await fetch("http://127.0.0.1:8000/api/countries");
@@ -105,5 +111,12 @@ function logOut() {
   }
 }
 
-fetchData();
+function mySummaries() {
+  window.location.href = "/my_summaries";
+}
 
+function myBusiness() {
+  window.location.href = "/my_company";
+}
+
+fetchData();

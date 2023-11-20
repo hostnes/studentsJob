@@ -40,13 +40,10 @@ class CompanyAdmin(admin.ModelAdmin):
 
 @admin.register(Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
-    list_display = ("title", "celery")
+    list_display = ("title", "salary")
 
 
-@admin.register(Experience)
-class ExperienceAdmin(admin.ModelAdmin):
-    list_display = ("title",)
-# @admin.register(District)
-# class DistrictAdmin(admin.ModelAdmin):
-#     list_display = ("title", "region")
+@admin.register(Response)
+class ResponseAdmin(admin.ModelAdmin):
+    list_display = ("user", "vacancy")
 

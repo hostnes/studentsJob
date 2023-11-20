@@ -1,4 +1,4 @@
-from echoApp.models import User
+from echoApp.models import *
 from django.conf import settings
 
 
@@ -28,3 +28,12 @@ def is_user_auth(request):
     if not user:
         return None
     return user['user']
+
+
+def is_has_company(user):
+    try:
+        company = Company.objects.get(creator=user)
+        return company
+    except:
+        return None
+

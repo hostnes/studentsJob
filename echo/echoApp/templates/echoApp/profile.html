@@ -69,7 +69,7 @@
       required
       value="{{ auth_user.phone }}"
     />
-    <label for="country">Country:</label>
+    <label for="select-country">Country:</label>
     <div class="profile-country">
       <select name="countries" id="select-country">
         <option value="none">-</option>
@@ -83,7 +83,11 @@
     />
   </form>
   <div style="display: flex; margin-top: 10px; justify-content: space-between">
-    <input type="submit" class="business-btn" value="Create business" />
+    {% if company %}
+        <input type="submit" class="my-business-btn" value="My business" />
+    {% else %}
+        <input type="submit" class="create-business-btn" value="Create business" />
+    {% endif %}
     <input type="submit" class="my-resumes" value="My resumes" />
     <input type="submit" class="logout-btn" value="Log out" />
   </div>

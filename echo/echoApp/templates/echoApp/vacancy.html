@@ -1,42 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Личный кабинет</title>
-    <link rel="stylesheet" href="style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-</head>
-<body>
+{% extends 'echoApp/base.html' %} {% block styles%} {% load static %}
+<link rel="stylesheet" href="{% static 'css/vacancy.css'%}" />
+{% endblock %} {% block container%}
     <div class="container">
-        <form>
-            <div class="company">
-                  
+        <h1>{{ vacancy.title}}</h1>
+        <div class="form">
+            <p class="text">
+                {{ vacancy.experience }}, {{ vacancy.employment }}, {{ vacancy.education }}<br>
+                {{ vacancy.country}}, {{ vacancy.region}}, {{ vacancy.district}}
+            </p>
+            
+            <div class="box1">
+                <p class="info1">{{ vacancy.responses }} человек</p>
+                <p class="pod_info1">уже откликнулись</p>
             </div>
 
-            <h3>Python Developer<br>
-            Джульетта Бандзеладзе<br>
-            +375663638134</h3>
-
-        <div class="box">
-            <p>fduijiokwshngoi;dfthjdlefkwhgbujdwgi;lu<br>
-                fduijiokwshngoi;dfthjerftgherfthjerfht<br>
-                fduijiokwshngoi;dfthjrejthertjhfrhjerh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-            </p>
+            <div class="company">
+                <img src="{{ vacancy.company.logo.url }}" class="image">
+                <h4>{{ vacancy.company.title }}</h4>
+                <p class="city">{{ vacancy.country }}, {{ vacancy.region }}</p>
+            </div>
         </div>
+
+        <p class="about">{{vacancy.description}}
+        </p>
+        <p style="margin-top: 20px">Сопроводительное письмо:</p>
+        <form method="post" >
+            {% csrf_token %}
+            <textarea name="message" class="input-message"></textarea>
+            <input type="submit" class="btn" value="Откликнуться">
         </form>
 
-        <input type="button" class="btn" value="Удалить резюме">
-        <input type="button" class="btn1" value="Изменить резюме">
-
     </div>
+{% endblock %}
 
-</body>
-</html>
+

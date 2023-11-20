@@ -22,9 +22,10 @@
       <label>Experience:</label>
       <select id="select-experience" >
         <option value="-">-</option>
-          {% for i in experience %}
-            <option value="{{ i }}">{{ i }}</option>
-          {% endfor %}
+        <option value="Without experience">Without experience</option>
+        <option value="Less than 1 years">Less than 1 years</option>
+        <option value="From 1 yo 3 years">From 1 yo 3 years</option>
+        <option value="More that 3 years">More that 3 years</option>
       </select>
     </div>
 
@@ -57,7 +58,7 @@
         <option value="Full employment">Full employment</option>
         <option value="Part-time employment">Part-time employment</option>
         <option value="One-time job">One-time job</option>
-        <option value="internship">Internship</option>
+        <option value="Internship">Internship</option>
       </select>
     </div>
 
@@ -71,7 +72,7 @@
             onClick="this.checked=!this.isChecked;"
             name="education"
             value="Not required"
-          />Not required
+          />-
         </li>
         <li>
           <input
@@ -140,23 +141,23 @@
   <div class="content">
     {% for i in vacancies %}
     <div class="vacancy">
-      <a href="#" class="dev_1" style="color: black; margin: 5px">
+      <a href="{% url 'vacancy' i.id%}" class="dev_1" style="color: black; margin: 5px">
           {{ i.title }}
       </a>
 
       <p style="font-size: 15px; margin: 5px; margin-top: 10px">
-        {{ i.city }}<br />{{ i.company }}<br />{{ i.experience}}
+        {{ i.country }} {{ i.region }} {{ i.district }}<br />{{ i.company }}<br />{{ i.experience}}
       </p>
 
       <p style="font-size: 20px; margin: 5px; margin-top: 10px">
-        {{ i.celery }} {{ i.currency }}
+        {{ i.salary }} {{ i.currency }}
       </p>
 
       <p style="font-size: 10px; margin: 5px; margin-top: 10px">
         {{ i.date_of_create }}
       </p>
 
-      <button class="send-cv">Откликнуться</button>
+      <button value="{{i.id}}" class="send-cv">Откликнуться</button>
     </div>
       {% endfor %}
   </div>
@@ -188,11 +189,13 @@
     >
       Сопроводительное письмо:
     </p>
-    <textarea class="input-message-for-vacancy"> </textarea>
-    <button class="send-latter">Откликнуться</button>
+    <form action="" method="post" id="send-response-form">
+        {% csrf_token %}
+        <textarea name="message" class="input-message-for-vacancy"> </textarea>
+        <button class="send-latter">Откликнуться</button>
+    </form>
   </div>
 </div>
-<div class="send-cv-form"></div>
 
 <script src="{% static 'js/vacancies.js'%}"></script>
 {% endblock %}

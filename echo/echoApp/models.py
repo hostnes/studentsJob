@@ -10,22 +10,30 @@ GENDERS = (
 
 CURRENCY = (
     ("USD", "USD"),
-    ("USD", "USD"),
+    ("BYN", "BYN"),
     ("RUB", "RUB"),
 )
 EMPLOYMENT = (
+    ("-", "-"),
     ("Full employment", "Full employment"),
     ("Part-time employment", "Part-time employment"),
     ("One-time job", "One-time job"),
     ("Internship", "Internship"),
 )
 EDUCATION = (
-    ("Not required", "Not required"),
+    ("-", "-"),
     ("Higher", "Higher"),
     ("Vocational", "Vocational"),
     ("Specialized secondary", "Specialized secondary"),
 )
 
+EXPERIENCE = (
+    ("-", "-"),
+    ("Without experience", "Without experience"),
+    ("Less than 1 years", "Less than 1 years"),
+    ("From 1 yo 3 years", "From 1 yo 3 years"),
+    ("More that 3 years", "More that 3 years"),
+)
 
 """#################################### general constants ####################################"""
 
@@ -70,13 +78,6 @@ class Education(models.Model):
         return self.title
 
 
-class Experience(models.Model):
-    title = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.title
-
-
 """#################################### echo ####################################"""
 
 
@@ -91,7 +92,9 @@ class User(models.Model):
 
     img = models.ImageField(upload_to="user_photo", blank=True, default='../static/img/none-logo.png')
     birthday = models.CharField(max_length=10, blank=True, null=True)
-    region = models.OneToOneField(Region, on_delete=models.SET_NULL, null=True, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
+    district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
     place_of_education = models.ForeignKey(Education, on_delete=models.CASCADE, null=True, blank=True)
 
     publish_phone = models.BooleanField(default=False)
@@ -105,8 +108,10 @@ class Company(models.Model):
     title = models.CharField(max_length=255)
     logo = models.ImageField(upload_to="company", blank=True)
     description = models.TextField()
+
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    # region = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -115,15 +120,21 @@ class Company(models.Model):
 class Vacancy(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    celery = models.PositiveIntegerField()
-    date_of_create = models.DateField(auto_now_add=True)
+    salary = models.PositiveIntegerField()
+    date_of_create = models.DateField(auto_now_add=True) #
+    responses = models.PositiveIntegerField(default=0)
 
-    currency = models.CharField(max_length=255, choices=CURRENCY,  null=True, default=None)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=True, null=True) #
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, blank=True, null=True) #
+    district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True) #
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, blank=True, null=True)
+
+    experience = models.CharField(max_length=255, choices=EXPERIENCE,  null=True, default=None)
+    currency = models.CharField(max_length=255, choices=CURRENCY,  null=True, default=None) #
     education = models.CharField(max_length=255, choices=EDUCATION,  null=True, default=None)
     employment = models.CharField(max_length=255, choices=EMPLOYMENT,  null=True, default=None)
-    experience = models.ForeignKey(Experience, on_delete=models.SET_NULL, blank=True, null=True)
-    city = models.ForeignKey(Region, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    is_publish = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -138,12 +149,23 @@ class Comment(models.Model):
         return self.user
 
 
+class Summary(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    date_of_create = models.DateField(auto_now_add=True)
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    experience = models.CharField(max_length=255, choices=EXPERIENCE,  null=True, default=None)
+
+    def __str__(self):
+        return self.title
 
 
+class Response(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
+    message = models.TextField()
 
 """#################################### echo.job ####################################"""
 
-
-# class Experience(models.Model):
-#     title = models.CharField(max_length=50)
 

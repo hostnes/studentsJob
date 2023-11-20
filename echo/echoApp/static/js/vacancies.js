@@ -131,3 +131,10 @@ document.querySelectorAll(".send-cv").forEach((element) => {
 function showForm() {
   document.getElementById("myModal").style.display = "block";
 }
+
+function createModal (event) {
+    myModalForm = document.querySelector('#send-response-form')
+    myModalForm.action = `vacancy/${event.target.value}`
+}
+
+document.querySelectorAll(".send-cv").forEach(element =>  element.addEventListener("click", createModal))
