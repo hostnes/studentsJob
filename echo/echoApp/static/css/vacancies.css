@@ -5,6 +5,9 @@
   margin: 0;
 }
 
+body {
+    background-color: #37373739;
+}
 .metro, .podrabotka {
   display: none;
 }
@@ -12,7 +15,6 @@
 .header {
   display: flex;
   width: 100%;
-  background-color: #37373739;
 }
 
 .filters {
@@ -258,4 +260,24 @@ select:focus {
 
 #searchBtn:active {
   background-color: #aaaaaa;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.search{
+    width: 620px;
+    height: 20px;
+    border-radius: 10px;
+    margin-top: 50px;
+    border: none;
+    background-color: #f7f7f7;
+    box-shadow: inset 4PX 4PX 6PX rgb(0, 0, 0, 0.326);
+    padding: 8px;
+}
+
+.search:focus{
+    outline: none;
 }

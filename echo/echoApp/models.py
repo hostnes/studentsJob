@@ -87,11 +87,11 @@ class User(models.Model):
     email = models.CharField(unique=True, max_length=255)
     username = models.CharField(max_length=230, blank=True, unique=True, null=True)
     password = models.CharField(max_length=100)
-    phone = models.CharField(max_length=30, blank=True, unique=True, null=True)
+    phone = models.CharField(max_length=30, blank=True, default='')
     gender = models.CharField(max_length=255, choices=GENDERS,  null=True, default=None)
 
     img = models.ImageField(upload_to="user_photo", blank=True, default='../static/img/none-logo.png')
-    birthday = models.CharField(max_length=10, blank=True, null=True)
+    birthday = models.CharField(max_length=10, blank=True, default='')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
@@ -155,7 +155,12 @@ class Summary(models.Model):
     date_of_create = models.DateField(auto_now_add=True)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     experience = models.CharField(max_length=255, choices=EXPERIENCE,  null=True, default=None)
+    education = models.CharField(max_length=255, choices=EDUCATION,  null=True, default=None)
+    employment = models.CharField(max_length=255, choices=EMPLOYMENT,  null=True, default=None)
+
+    is_publish = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title

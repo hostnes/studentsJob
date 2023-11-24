@@ -45,5 +45,9 @@ class VacancyAdmin(admin.ModelAdmin):
 
 @admin.register(Response)
 class ResponseAdmin(admin.ModelAdmin):
-    list_display = ("user", "vacancy")
+    list_display = ("user", "vacancy")\
+
+@admin.register(Summary)
+class SummaryAdmin(admin.ModelAdmin):
+    list_display = ("title", "user")
 

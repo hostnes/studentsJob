@@ -1,7 +1,11 @@
 {% extends 'echoApp/base.html' %} {% block styles%} {% load static %}
 <link rel="stylesheet" href="{% static 'css/vacancies.css'%}" />
 {% endblock %} {% block container%}
+<form>
+    <input type="text" placeholder="Search here..." class="search">
+</form>
 <div class="header">
+
   <div class="filters">
     <div class="countries">
       <div class="city" bis_skin_checked="1">
@@ -156,8 +160,9 @@
       <p style="font-size: 10px; margin: 5px; margin-top: 10px">
         {{ i.date_of_create }}
       </p>
-
+        {% if auth_user %}
       <button value="{{i.id}}" class="send-cv">Откликнуться</button>
+        {% endif %}
     </div>
       {% endfor %}
   </div>

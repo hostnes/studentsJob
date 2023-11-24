@@ -63,8 +63,8 @@ input[type="checkbox"] {
   font-weight: 900;
 }
 
-.my-business-btn,
-.create-business-btn,
+.add-company,
+.my-company,
 .my-resumes,
 .logout-btn {
   font-family: "Poppins", sans-serif;

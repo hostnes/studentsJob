@@ -23,12 +23,14 @@
 
         <p class="about">{{vacancy.description}}
         </p>
+        {% if auth_user %}
         <p style="margin-top: 20px">Сопроводительное письмо:</p>
         <form method="post" >
             {% csrf_token %}
             <textarea name="message" class="input-message"></textarea>
             <input type="submit" class="btn" value="Откликнуться">
         </form>
+        {% endif %}
 
     </div>
 {% endblock %}

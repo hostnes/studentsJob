@@ -1,6 +1,8 @@
 * {
   margin: 0px;
   padding: 0px;
+    /*animation: rotateAnimation 5s linear infinite;*/
+
 }
 .container,
 .container * {
@@ -488,6 +490,8 @@
   box-shadow: 0px 0px 50px 20px rgba(0, 0, 0, 0.25);
 }
 .vscode-icons-file-type-vscode {
+      animation: rotateAnimation 5s linear infinite;
+
   position: absolute;
   left: 1027px;
   top: 259px;
@@ -538,6 +542,8 @@
   box-shadow: 0px 0px 50px 20px rgba(0, 0, 0, 0.25);
 }
 .streamline-emojis-green-book {
+      animation: rotateAnimation 5s linear infinite;
+
   position: absolute;
   left: 667px;
   top: 259px;
@@ -589,6 +595,7 @@
   box-shadow: 0px 0px 50px 20px rgba(0, 0, 0, 0.25);
 }
 .noto-money-bag {
+    animation: rotateAnimation 5s linear infinite;
   position: absolute;
   left: 313px;
   top: 259px;
@@ -735,10 +742,20 @@
 }
 
 .message-logo {
+  animation: rotateAnimation 5s linear infinite;
   transition: ease all 0.4s;
   -webkit-filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.25));
   filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.50));
 }
+
+    @keyframes rotateAnimation {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
 .message-logo:hover {
   width:  100px;

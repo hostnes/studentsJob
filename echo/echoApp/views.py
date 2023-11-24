@@ -1,19 +1,12 @@
-import hashlib
-import json
-
 from django.conf import settings
 from django.db.models import F
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 
-from .models import Comment, User
-from echoApp.forms import AuthForm
-
 from echoApp.models import *
 from echoApp.validators import email_validator
 from echoApp.backend import get_user, fast_hash, is_user_auth, is_has_company
-from echoApp.models import GENDERS
 
 
 @api_view(["GET"])
@@ -54,12 +47,11 @@ def home(request):
 
 def vacancies(request):
     context = {}
-    if request.method == 'GET':
-        if is_user_auth(request) != None:
-            context['auth_user'] = User.objects.get(id=is_user_auth(request))
-        vacancies = Vacancy.objects.filter(is_publish=True)
-        context['vacancies'] = vacancies
-        return render(request, 'echoApp/vacancies.html', context=context)
+    if is_user_auth(request) != None:
+        context['auth_user'] = User.objects.get(id=is_user_auth(request))
+    vacancies = Vacancy.objects.filter(is_publish=True)
+    context['vacancies'] = vacancies
+    return render(request, 'echoApp/vacancies.html', context=context)
 
 
 def filter_vacancies(request):
@@ -78,8 +70,24 @@ def vacancy(request, pk):
         vacancy = Vacancy.objects.get(id=pk)
         vacancy.responses = F('responses') + 1
         vacancy.save()
-        Response.objects.create(message=request.POST['message'], vacancy_id=pk, user_id=is_user_auth(request))
+        Response.objects.create(message=request.POST['message'], vacancy_id=pk, user=User.objects.get(id=is_user_auth(request)))
         return redirect('vacancies')
+
+
+def summaries(request):
+    context = {}
+    if is_user_auth(request) != None:
+        context['auth_user'] = User.objects.get(id=is_user_auth(request))
+    context['summaries'] = Summary.objects.filter(is_publish=True)
+    return render(request, 'echoApp/summaries.html', context=context)
+
+
+def summary(request, pk):
+    context = {}
+    if is_user_auth(request) != None:
+        context['auth_user'] = User.objects.get(id=is_user_auth(request))
+    context['summary'] = Summary.objects.get(id=pk)
+    return render(request, 'echoApp/summary.html', context=context)
 
 
 def login(request):
@@ -140,7 +148,13 @@ def profile(request):
             user_obj.last_name = request.POST['last_name']
             user_obj.birthday = request.POST['birthday']
             user_obj.gender = request.POST.get('gender')
-            user_obj.phone = request.POST.get('phone')
+            user_obj.phone = request.POST['phone']
+            try:
+                user_obj.country = Country.object.get(title=request.POST.get('country'))
+                user_obj.region = Region.object.get(title=request.POST.get('region'))
+                user_obj.district = District.object.get(title=request.POST.get('district'))
+            except:
+                pass
             user_obj.save()
             context['auth_user'] = user_obj
             return render(request, 'echoApp/profile.html', context=context)
@@ -159,6 +173,27 @@ def create_summary(request):
     if is_user_auth(request) != None:
         context['auth_user'] = User.objects.get(id=is_user_auth(request))
     return render(request, 'echoApp/my_summaries.html', context=context)
+
+
+def add_company(request):
+    context = {}
+    user = is_user_auth(request)
+    if user != None:
+        if is_has_company(user):
+            print(is_has_company(user))
+            return redirect('my_company')
+        else:
+            context['auth_user'] = User.objects.get(id=is_user_auth(request))
+            context['country'] = Country.objects.all()
+            if request.method == 'POST':
+                company = Company(title=request.POST['title'],
+                                  country=Country.objects.get(title=request.POST.get('country')),
+                                  description=request.POST['description'],
+                                  creator_id=user,
+                                  logo=request.FILES['logo'])
+                company.save()
+                return redirect('my_company')
+    return render(request, 'echoApp/add_company.html', context=context)
 
 
 def my_company(request):
@@ -202,6 +237,9 @@ def my_company(request):
                         'employment': request.POST.get('employment'),
                     }
                     Vacancy.objects.create(**vacancy_data)
+
+        else:
+            return redirect('add_company')
     return render(request, 'echoApp/my_company.html', context=context)
 
 

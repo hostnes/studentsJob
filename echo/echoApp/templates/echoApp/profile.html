@@ -25,6 +25,8 @@
       name="first_name"
       required
       value="{{ auth_user.first_name }}"
+                  maxlength="20"
+
     />
     <label for="last-name">Surname:</label>
     <input
@@ -33,9 +35,12 @@
       name="last_name"
       required
       value="{{ auth_user.last_name }}"
+                  maxlength="20"
+
     />
     <label for="date-input"> Date of Birth:</label>
     <input
+
       type="text"
       id="date-input"
       name="birthday"
@@ -44,6 +49,7 @@
     />
     <label for="email">Email:</label>
     <input
+            maxlength="40"
       type="email"
       id="email"
       name="email"
@@ -62,7 +68,7 @@
       {% endif %}
     </select>
     <label for="phone">Telephone number: </label>
-    <input
+    <input maxlength="20"
       type="tel"
       id="phone"
       name="phone"
@@ -71,7 +77,7 @@
     />
     <label for="select-country">Country:</label>
     <div class="profile-country">
-      <select name="countries" id="select-country">
+      <select name="country" id="select-country">
         <option value="none">-</option>
       </select>
     </div>
@@ -84,9 +90,9 @@
   </form>
   <div style="display: flex; margin-top: 10px; justify-content: space-between">
     {% if company %}
-        <input type="submit" class="my-business-btn" value="My business" />
+        <input type="submit" class="my-company" value="My company" />
     {% else %}
-        <input type="submit" class="create-business-btn" value="Create business" />
+        <input type="submit" class="add-company" value="Add company" />
     {% endif %}
     <input type="submit" class="my-resumes" value="My resumes" />
     <input type="submit" class="logout-btn" value="Log out" />

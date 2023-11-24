@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main page</title>
     <link rel="stylesheet" href="{% static 'css/navbar.css'%}" />
+      <link rel="shortcut icon" href="{% static 'img/logo.png'%}" />
     {% block styles%}
     {% endblock %}
     <link rel="stylesheet" href="{% static 'css/footer.css'%}" />
@@ -20,7 +21,7 @@
         /></a>
         <div class="navlist">
           <a class="nav-button" href="/vacancies">VACANCIES</a>
-          <a class="nav-button" href="/summary">SUMMARY</a>
+          <a class="nav-button" href="/summaries">SUMMARY</a>
         </div>
           <div class="navbtns">
               {% if auth_user %}

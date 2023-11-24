@@ -1,30 +1,24 @@
 {% extends 'echoApp/base.html' %} {% block styles%} {% load static %}
 <link rel="stylesheet" href="{% static 'css/summary.css'%}" />
 {% endblock %} {% block container%}
+<div style="display: flex; justify-content: center">
     <div class="container">
-        <form>
-            <div class="company">
-
+        <div style="display: flex; padding-bottom: 30px">
+            <img src="{{ summary.user.img.url }}" class="img">
+            <div style="margin-left: 40px">
+                <h2>{{ summary.title }}</h2>
+                <h4>{{ summary.user.first_name }} {{ summary.user.last_name }}</h4>
+                <h5>{{ summary.user.country }} {{ summary.user.region }} {{ summary.user.district }}</h5>
+                <h5>{{ summary.user.email }}</h5>
+                <h5>{{ summary.user.place_of_education }}</h5>
             </div>
-
-            <h3>Python Developer<br>
-            Джульетта Бандзеладзе<br>
-            +375663638134</h3>
-
-        <div class="box">
-            <p>fduijiokwshngoi;dfthjdlefkwhgbujdwgi;lu<br>
-                fduijiokwshngoi;dfthjerftgherfthjerfht<br>
-                fduijiokwshngoi;dfthjrejthertjhfrhjerh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-                fduijiokwshngoi;dfthjrehjtsfrthtrfhssrfh<br>
-            </p>
         </div>
-        </form>
-
-        <input type="button" class="btn" value="Удалить резюме">
-        <input type="button" class="btn1" value="Изменить резюме">
-
+            <h4>Experience: {{ summary.experience }}</h4>
+            <h4>Education: {{ summary.education }}</h4>
+            <h4>Employment: {{ summary.employment }}</h4>
+        <div class="box">
+            <p>{{ summary.description }}</p>
+        </div>
+    </div>
     </div>
 {% endblock %}
